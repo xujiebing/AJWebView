@@ -1,0 +1,6 @@
+framework module AJWebView {
+  umbrella header "AJWebView-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "AJWebView",
+  "version": "0.1.0",
+  "summary": "A short description of AJWebView.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/xujiebing/AJWebView",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "xujiebing": "xujiebing@bwton.com"
+  },
+  "source": {
+    "git": "https://github.com/xujiebing/AJWebView.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "AJWebView/Classes/**/*"
+}

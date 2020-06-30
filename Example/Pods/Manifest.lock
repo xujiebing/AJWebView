@@ -1,0 +1,16 @@
+PODS:
+  - AJWebView (0.1.0)
+
+DEPENDENCIES:
+  - AJWebView (from `../`)
+
+EXTERNAL SOURCES:
+  AJWebView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AJWebView: 92bf2b2b6ecf61c0e610a80002d9e206bc281b98
+
+PODFILE CHECKSUM: fe131351f5a840d54f74fa1d368a3a7690670a15
+
+COCOAPODS: 1.8.4
