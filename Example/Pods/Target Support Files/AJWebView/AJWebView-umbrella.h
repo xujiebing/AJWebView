@@ -10,6 +10,14 @@
 #endif
 #endif
 
+#import "BWTBaseWebLoader.h"
+#import "BWTHybridWebview.h"
+#import "BWTRegisterBaseClass.h"
+#import "BWTBaseWebCacheProtocol.h"
+#import "BWTBaseWebCacheTools.h"
+#import "NSURLProtocol+BWTBaseWeb.h"
+#import "WebViewJavascriptBridgeBase.h"
+#import "WKWebViewJavascriptBridge.h"
 
 FOUNDATION_EXPORT double AJWebViewVersionNumber;
 FOUNDATION_EXPORT const unsigned char AJWebViewVersionString[];

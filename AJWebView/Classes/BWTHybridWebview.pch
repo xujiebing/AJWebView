@@ -1,0 +1,16 @@
+//
+//  BWTHybridWebview.pch
+//  BWTHybridWebview
+//
+//  Created by 徐结兵 on 2020/2/11.
+//
+
+#ifndef BWTHybridWebview_pch
+#define BWTHybridWebview_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "BWTHybridWebview.h"
+
+#endif /* BWTHybridWebview_pch */

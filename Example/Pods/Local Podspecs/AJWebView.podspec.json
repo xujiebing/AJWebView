@@ -18,5 +18,10 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "AJWebView/Classes/**/*"
+  "source_files": "AJWebView/Classes/**/*.{h,m}",
+  "resource_bundles": {
+    "AJWebView": [
+      "AJWebView/Assets/Image.xcassets"
+    ]
+  }
 }
