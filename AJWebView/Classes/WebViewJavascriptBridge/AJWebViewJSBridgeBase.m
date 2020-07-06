@@ -67,11 +67,11 @@ static int logMaxLength = 500;
     [self.delegate _evaluateJavascript:javascriptCommand];
 }
 
-- (void)_queueMessage:(WVJBMessage*)message {
+- (void)_queueMessage:(WVJBMessage *)message {
     [self _dispatchMessage:message];
 }
 
-- (void)_dispatchMessage:(WVJBMessage*)message {
+- (void)_dispatchMessage:(WVJBMessage *)message {
     NSString *messageJSON = [self _serializeMessage:message pretty:NO];
     [self _log:@"SEND" json:messageJSON];
     messageJSON = [messageJSON stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) WKWebView *wv;
 
 /// 传递参数的字典
-@property (nonatomic, strong) NSDictionary *params;
+@property (nonatomic, strong) NSDictionary *parameter;
 
 
 #pragma mark --- AJJSPageApi

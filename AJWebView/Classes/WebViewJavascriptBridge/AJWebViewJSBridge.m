@@ -10,7 +10,7 @@
 #if defined(supportsWKWebKit)
 
 @implementation AJWebViewJSBridge {
-    __weak WKWebView* _webView;
+    __weak WKWebView *_webView;
     __weak id<WKNavigationDelegate> _webViewDelegate;
     long _uniqueId;
     AJWebViewJSBridgeBase *_base;
@@ -45,12 +45,11 @@
     _webViewDelegate = nil;
     _webView.navigationDelegate = nil;
     
-    NSLog(@"<WKWebViewJavascriptBridge>dealloc");
+    NSLog(@"<AJWebViewJSBridge>dealloc");
 }
 
 - (void) _setupInstance:(WKWebView*)webView {
     _webView = webView;
-//    _webView.navigationDelegate = self;
     _base = [[AJWebViewJSBridgeBase alloc] init];
     _base.delegate = self;
 }
@@ -125,7 +124,7 @@
 #pragma mark - WKScriptMessageHandler
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
-    if ([message.name isEqualToString:@"WKWebViewJavascriptBridge"]) {
+    if ([message.name isEqualToString:@"AJWebViewJSBridge"]) {
         //解析数据
         [self excuteMessage:message.body];
     }
