@@ -1,14 +1,13 @@
 //
-//  JSRegisterBaseClass.m
-//  QuickHybirdJSBridgeDemo
+//  AJRegisterBaseClass.m
+//  AJKit
 //
-//  Created by guanhao on 2017/12/30.
-//  Copyright © 2017年 com.gh. All rights reserved.
+//  Created by 徐结兵 on 2020/7/4.
 //
 
-#import "BWTRegisterBaseClass.h"
+#import "AJRegisterBaseClass.h"
 
-@interface BWTRegisterBaseClass ()
+@interface AJRegisterBaseClass ()
 
 /**
  开放给系统API的内部操作使用的字典，可临时在本页面中缓存多种数据
@@ -17,7 +16,7 @@
 
 @end
 
-@implementation BWTRegisterBaseClass
+@implementation AJRegisterBaseClass
 
 - (NSMutableDictionary *)handlesDic {
     if (!_handlesDic) {
@@ -77,20 +76,11 @@
 
 //获取
 - (id)objectForKeyInCacheDic:(NSString *)keyName {
-    if ([self containObjectForKeyInCacheDic:keyName]) {
-        return [self.cacheHandlerDic objectForKey:keyName];
+    if ([self.cacheHandlerDic ajContainsObjectForKey:keyName]) {
+        return [self.cacheHandlerDic ajObjectForKey:keyName];
     } else {
         return nil;
     }
-}
-
-- (BOOL)containObjectForKeyInCacheDic:(NSString *)keyName {
-    if (keyName.length > 0) {
-        if ([self.cacheHandlerDic.allKeys containsObject:keyName]) {
-            return YES;
-        }
-    }
-    return NO;
 }
 
 //删除

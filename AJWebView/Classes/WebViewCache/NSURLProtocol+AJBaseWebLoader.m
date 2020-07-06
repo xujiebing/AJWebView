@@ -1,37 +1,32 @@
 //
-//  NSURLProtocol+BWTBaseWeb.m
-//  NSURLProtocol+BWTBaseWeb
+//  NSURLProtocol+AJBaseWebLoader.m
+//  AJKit
 //
-//  Created by yeatse on 2016/10/11.
-//  Copyright © 2016年 Yeatse. All rights reserved.
+//  Created by 徐结兵 on 2020/7/5.
 //
 
-#import "NSURLProtocol+BWTBaseWeb.h"
+#import "NSURLProtocol+AJBaseWebLoader.h"
 #import <WebKit/WebKit.h>
-
-/**
- * The functions below use some undocumented APIs, which may lead to rejection by Apple.
- */
 
 FOUNDATION_STATIC_INLINE Class ContextControllerClass() {
     static Class cls;
     if (!cls) {
-        cls = [[[WKWebView new] valueForKey:@"YnJvd3NpbmdDb250ZXh0Q29udHJvbGxlcg==".bwtBase64Decoding] class];
+        cls = [[[WKWebView new] valueForKey:@"YnJvd3NpbmdDb250ZXh0Q29udHJvbGxlcg==".ajBase64Decoding] class];
     }
     return cls;
 }
 
 FOUNDATION_STATIC_INLINE SEL RegisterSchemeSelector() {
-    return NSSelectorFromString(@"cmVnaXN0ZXJTY2hlbWVGb3JDdXN0b21Qcm90b2NvbDo=".bwtBase64Decoding);
+    return NSSelectorFromString(@"cmVnaXN0ZXJTY2hlbWVGb3JDdXN0b21Qcm90b2NvbDo=".ajBase64Decoding);
 }
 
 FOUNDATION_STATIC_INLINE SEL UnregisterSchemeSelector() {
-    return NSSelectorFromString(@"dW5yZWdpc3RlclNjaGVtZUZvckN1c3RvbVByb3RvY29sOg==".bwtBase64Decoding);
+    return NSSelectorFromString(@"dW5yZWdpc3RlclNjaGVtZUZvckN1c3RvbVByb3RvY29sOg==".ajBase64Decoding);
 }
 
-@implementation NSURLProtocol (BWTBaseWeb)
+@implementation NSURLProtocol (AJBaseWebLoader)
 
-+ (void)wk_registerScheme:(NSString *)scheme {
++ (void)ajRregisterScheme:(NSString *)scheme {
     Class cls = ContextControllerClass();
     SEL sel = RegisterSchemeSelector();
     if ([(id)cls respondsToSelector:sel]) {
@@ -42,7 +37,7 @@ FOUNDATION_STATIC_INLINE SEL UnregisterSchemeSelector() {
     }
 }
 
-+ (void)wk_unregisterScheme:(NSString *)scheme {
++ (void)ajUnregisterScheme:(NSString *)scheme {
     Class cls = ContextControllerClass();
     SEL sel = UnregisterSchemeSelector();
     if ([(id)cls respondsToSelector:sel]) {
@@ -52,5 +47,6 @@ FOUNDATION_STATIC_INLINE SEL UnregisterSchemeSelector() {
 #pragma clang diagnostic pop
     }
 }
+
 
 @end

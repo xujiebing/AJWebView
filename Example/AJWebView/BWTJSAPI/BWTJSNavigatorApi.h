@@ -6,11 +6,11 @@
 //  Copyright © 2019 com.quickhybrid. All rights reserved.
 //
 
-#import "BWTRegisterBaseClass.h"
+#import "AJRegisterBaseClass.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BWTJSNavigatorApi : BWTRegisterBaseClass
+@interface BWTJSNavigatorApi : AJRegisterBaseClass
 
 @end
 

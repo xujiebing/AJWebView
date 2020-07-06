@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C438A461E998A0366C61A3D /* Pods_AJWebView_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24CB269D7E239BD257063B87 /* Pods_AJWebView_Tests.framework */; };
+		4DBAD964986ED96F7BE7693C /* Pods_AJWebView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D23AA2D82FE78C52FBBD650 /* Pods_AJWebView_Example.framework */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -23,15 +23,6 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71719F9D1E33DC2100824A3D /* LaunchScreen.storyboard */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		9BF8FE8424AEA0F1003A8F81 /* BWTJSDeviceApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE7424AEA0F1003A8F81 /* BWTJSDeviceApi.m */; };
-		9BF8FE8524AEA0F1003A8F81 /* BWTJSUIApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE7A24AEA0F1003A8F81 /* BWTJSUIApi.m */; };
-		9BF8FE8624AEA0F1003A8F81 /* BWTJSNavigatorApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE7D24AEA0F1003A8F81 /* BWTJSNavigatorApi.m */; };
-		9BF8FE8724AEA0F1003A8F81 /* BWTJSUserApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE7E24AEA0F1003A8F81 /* BWTJSUserApi.m */; };
-		9BF8FE8824AEA0F1003A8F81 /* BWTJSRuntimeApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE7F24AEA0F1003A8F81 /* BWTJSRuntimeApi.m */; };
-		9BF8FE8924AEA0F1003A8F81 /* BWTJSPageApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE8024AEA0F1003A8F81 /* BWTJSPageApi.m */; };
-		9BF8FE8A24AEA0F1003A8F81 /* BWTJSAuthApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE8124AEA0F1003A8F81 /* BWTJSAuthApi.m */; };
-		9BF8FE8B24AEA0F1003A8F81 /* BWTJSUtilApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8FE8324AEA0F1003A8F81 /* BWTJSUtilApi.m */; };
-		EAC6A70B791ED2CEE75818F9 /* Pods_AJWebView_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFA19AC2C158777C9CD25335 /* Pods_AJWebView_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,9 +37,7 @@
 
 /* Begin PBXFileReference section */
 		04B4C064ABED2FC07396CB5F /* Pods-AJWebView_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJWebView_Example.release.xcconfig"; path = "Target Support Files/Pods-AJWebView_Example/Pods-AJWebView_Example.release.xcconfig"; sourceTree = "<group>"; };
-		050EBFC2A9F0BDD0CB1F4750 /* Pods-AJWebView_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJWebView_Tests.release.xcconfig"; path = "Target Support Files/Pods-AJWebView_Tests/Pods-AJWebView_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1A4249B70AF20CC554D0C020 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		24CB269D7E239BD257063B87 /* Pods_AJWebView_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJWebView_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		377FB3C362E0FB754C63E88F /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		3EAC45943E0A9CCFD0CD1B2F /* AJWebView.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AJWebView.podspec; path = ../AJWebView.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		6003F58A195388D20070C39A /* AJWebView_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJWebView_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,24 +62,7 @@
 		71719F9E1E33DC2100824A3D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		71CDCBC85EBE51758954AA37 /* Pods-AJWebView_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJWebView_Example.debug.xcconfig"; path = "Target Support Files/Pods-AJWebView_Example/Pods-AJWebView_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9BF8FE7424AEA0F1003A8F81 /* BWTJSDeviceApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSDeviceApi.m; sourceTree = "<group>"; };
-		9BF8FE7524AEA0F1003A8F81 /* BWTJSRuntimeApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSRuntimeApi.h; sourceTree = "<group>"; };
-		9BF8FE7624AEA0F1003A8F81 /* BWTJSUserApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSUserApi.h; sourceTree = "<group>"; };
-		9BF8FE7724AEA0F1003A8F81 /* BWTJSNavigatorApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSNavigatorApi.h; sourceTree = "<group>"; };
-		9BF8FE7824AEA0F1003A8F81 /* BWTJSPageApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSPageApi.h; sourceTree = "<group>"; };
-		9BF8FE7924AEA0F1003A8F81 /* BWTJSUtilApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSUtilApi.h; sourceTree = "<group>"; };
-		9BF8FE7A24AEA0F1003A8F81 /* BWTJSUIApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSUIApi.m; sourceTree = "<group>"; };
-		9BF8FE7B24AEA0F1003A8F81 /* BWTJSAuthApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSAuthApi.h; sourceTree = "<group>"; };
-		9BF8FE7C24AEA0F1003A8F81 /* BWTJSDeviceApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSDeviceApi.h; sourceTree = "<group>"; };
-		9BF8FE7D24AEA0F1003A8F81 /* BWTJSNavigatorApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSNavigatorApi.m; sourceTree = "<group>"; };
-		9BF8FE7E24AEA0F1003A8F81 /* BWTJSUserApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSUserApi.m; sourceTree = "<group>"; };
-		9BF8FE7F24AEA0F1003A8F81 /* BWTJSRuntimeApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSRuntimeApi.m; sourceTree = "<group>"; };
-		9BF8FE8024AEA0F1003A8F81 /* BWTJSPageApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSPageApi.m; sourceTree = "<group>"; };
-		9BF8FE8124AEA0F1003A8F81 /* BWTJSAuthApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSAuthApi.m; sourceTree = "<group>"; };
-		9BF8FE8224AEA0F1003A8F81 /* BWTJSUIApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWTJSUIApi.h; sourceTree = "<group>"; };
-		9BF8FE8324AEA0F1003A8F81 /* BWTJSUtilApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWTJSUtilApi.m; sourceTree = "<group>"; };
-		DFD153C80232BC22F00693D3 /* Pods-AJWebView_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJWebView_Tests.debug.xcconfig"; path = "Target Support Files/Pods-AJWebView_Tests/Pods-AJWebView_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		EFA19AC2C158777C9CD25335 /* Pods_AJWebView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJWebView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D23AA2D82FE78C52FBBD650 /* Pods_AJWebView_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJWebView_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +73,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				EAC6A70B791ED2CEE75818F9 /* Pods_AJWebView_Example.framework in Frameworks */,
+				4DBAD964986ED96F7BE7693C /* Pods_AJWebView_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,7 +84,6 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				5C438A461E998A0366C61A3D /* Pods_AJWebView_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,8 +118,7 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				EFA19AC2C158777C9CD25335 /* Pods_AJWebView_Example.framework */,
-				24CB269D7E239BD257063B87 /* Pods_AJWebView_Tests.framework */,
+				9D23AA2D82FE78C52FBBD650 /* Pods_AJWebView_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -156,7 +126,6 @@
 		6003F593195388D20070C39A /* Example for AJWebView */ = {
 			isa = PBXGroup;
 			children = (
-				9BF8FE7324AEA0F1003A8F81 /* BWTJSAPI */,
 				6003F59C195388D20070C39A /* AJAppDelegate.h */,
 				6003F59D195388D20070C39A /* AJAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -215,33 +184,8 @@
 			children = (
 				71CDCBC85EBE51758954AA37 /* Pods-AJWebView_Example.debug.xcconfig */,
 				04B4C064ABED2FC07396CB5F /* Pods-AJWebView_Example.release.xcconfig */,
-				DFD153C80232BC22F00693D3 /* Pods-AJWebView_Tests.debug.xcconfig */,
-				050EBFC2A9F0BDD0CB1F4750 /* Pods-AJWebView_Tests.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		9BF8FE7324AEA0F1003A8F81 /* BWTJSAPI */ = {
-			isa = PBXGroup;
-			children = (
-				9BF8FE7424AEA0F1003A8F81 /* BWTJSDeviceApi.m */,
-				9BF8FE7524AEA0F1003A8F81 /* BWTJSRuntimeApi.h */,
-				9BF8FE7624AEA0F1003A8F81 /* BWTJSUserApi.h */,
-				9BF8FE7724AEA0F1003A8F81 /* BWTJSNavigatorApi.h */,
-				9BF8FE7824AEA0F1003A8F81 /* BWTJSPageApi.h */,
-				9BF8FE7924AEA0F1003A8F81 /* BWTJSUtilApi.h */,
-				9BF8FE7A24AEA0F1003A8F81 /* BWTJSUIApi.m */,
-				9BF8FE7B24AEA0F1003A8F81 /* BWTJSAuthApi.h */,
-				9BF8FE7C24AEA0F1003A8F81 /* BWTJSDeviceApi.h */,
-				9BF8FE7D24AEA0F1003A8F81 /* BWTJSNavigatorApi.m */,
-				9BF8FE7E24AEA0F1003A8F81 /* BWTJSUserApi.m */,
-				9BF8FE7F24AEA0F1003A8F81 /* BWTJSRuntimeApi.m */,
-				9BF8FE8024AEA0F1003A8F81 /* BWTJSPageApi.m */,
-				9BF8FE8124AEA0F1003A8F81 /* BWTJSAuthApi.m */,
-				9BF8FE8224AEA0F1003A8F81 /* BWTJSUIApi.h */,
-				9BF8FE8324AEA0F1003A8F81 /* BWTJSUtilApi.m */,
-			);
-			path = BWTJSAPI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,7 +199,7 @@
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
-				1EBB42EFA399B1ADAFE53587 /* [CP] Embed Pods Frameworks */,
+				050CD93918B9526D44247F03 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -270,7 +214,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "AJWebView_Tests" */;
 			buildPhases = (
-				C086C24C3AFD42F23DF325E4 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
@@ -295,6 +238,10 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = xujiebing;
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = NT6BP8667Z;
+						ProvisioningStyle = Manual;
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};
@@ -343,18 +290,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1EBB42EFA399B1ADAFE53587 /* [CP] Embed Pods Frameworks */ = {
+		050CD93918B9526D44247F03 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AJWebView_Example/Pods-AJWebView_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AJKit/AJKit.framework",
 				"${BUILT_PRODUCTS_DIR}/AJWebView/AJWebView.framework",
+				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AJKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AJWebView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -383,28 +338,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C086C24C3AFD42F23DF325E4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AJWebView_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -413,16 +346,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* AJAppDelegate.m in Sources */,
-				9BF8FE8A24AEA0F1003A8F81 /* BWTJSAuthApi.m in Sources */,
 				6003F5A7195388D20070C39A /* AJViewController.m in Sources */,
-				9BF8FE8924AEA0F1003A8F81 /* BWTJSPageApi.m in Sources */,
-				9BF8FE8524AEA0F1003A8F81 /* BWTJSUIApi.m in Sources */,
-				9BF8FE8724AEA0F1003A8F81 /* BWTJSUserApi.m in Sources */,
-				9BF8FE8824AEA0F1003A8F81 /* BWTJSRuntimeApi.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				9BF8FE8B24AEA0F1003A8F81 /* BWTJSUtilApi.m in Sources */,
-				9BF8FE8424AEA0F1003A8F81 /* BWTJSDeviceApi.m in Sources */,
-				9BF8FE8624AEA0F1003A8F81 /* BWTJSNavigatorApi.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,12 +475,15 @@
 			baseConfigurationReference = 71CDCBC85EBE51758954AA37 /* Pods-AJWebView_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NT6BP8667Z;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AJWebView/AJWebView-Prefix.pch";
 				INFOPLIST_FILE = "AJWebView/AJWebView-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bwton.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = msx_dev;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -566,12 +494,15 @@
 			baseConfigurationReference = 04B4C064ABED2FC07396CB5F /* Pods-AJWebView_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = NT6BP8667Z;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AJWebView/AJWebView-Prefix.pch";
 				INFOPLIST_FILE = "AJWebView/AJWebView-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bwton.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = msx_dev;
 				SWIFT_VERSION = 4.0;
 				WRAPPER_EXTENSION = app;
 			};
@@ -579,7 +510,6 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFD153C80232BC22F00693D3 /* Pods-AJWebView_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -604,7 +534,6 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 050EBFC2A9F0BDD0CB1F4750 /* Pods-AJWebView_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

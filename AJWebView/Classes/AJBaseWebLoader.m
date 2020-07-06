@@ -1,19 +1,21 @@
 //
-//  BWTBaseWebLoader.m
-//  QuickHybirdJSBridgeDemo
+//  AJBaseWebLoader.m
+//  AJKit
 //
-//  Created by guanhao on 2017/12/30.
-//  Copyright © 2017年 com.gh. All rights reserved.
+//  Created by 徐结兵 on 2020/7/4.
 //
 
-#import "BWTBaseWebLoader.h"
+#import "AJBaseWebLoader.h"
+#import <WebKit/WebKit.h>
+#import <AJWebView/AJWebViewJSBridge.h>
+#import <AJWebView/AJBaseWebCacheTools.h>
 
 static NSString *KVOContext;
 static UIColor *kProgressColor;
 
-@interface BWTBaseWebLoader () <WKUIDelegate, WKNavigationDelegate, UIGestureRecognizerDelegate>
+@interface AJBaseWebLoader () <WKUIDelegate, WKNavigationDelegate, UIGestureRecognizerDelegate>
 /** JSBridge */
-@property (nonatomic, strong) WKWebViewJavascriptBridge *bridge;
+@property (nonatomic, strong) AJWebViewJSBridge *bridge;
 /** 页面加载进度条 */
 @property (nonatomic, weak) UIProgressView *progressView;
 /** 加载进度条的高度约束 */
@@ -25,7 +27,7 @@ static UIColor *kProgressColor;
 
 @end
 
-@implementation BWTBaseWebLoader
+@implementation AJBaseWebLoader
 
 #pragma mark --- 生命周期
 
@@ -48,51 +50,45 @@ static UIColor *kProgressColor;
     [self loadHTML];
     
     // 重写返回按钮事件
-    [self addLeftButton:@selector(backBtnAction:)];
+    [self p_backButton];
     
     // 监听重定向
-    kRACWeakSelf
-    [[RACObserve(self.wv, canGoBack) distinctUntilChanged] subscribeNext:^(id  _Nullable x) {
-        kRACStrongSelf
-        [self setCloseBarBtn];
-    }];
+    /// TODO:待开发
+//    kRACWeakSelf
+//    [[RACObserve(self.wv, canGoBack) distinctUntilChanged] subscribeNext:^(id  _Nullable x) {
+//        kRACStrongSelf
+//        [self setCloseBarBtn];
+//    }];
     
-    // 是否隐藏导航栏
-    NSNumber *hideNavigationBar = [self.params bwtObjectForKey:@"hidenavigationbar"];
-    if ([hideNavigationBar boolValue]) {
-        [BWTNativeNavigator hide];
-    } else {
-        [BWTNativeNavigator show];
-    }
-    
-    // 是否隐藏状态栏
-    NSNumber *hidestatusbar = [self.params bwtObjectForKey:@"hidestatusbar"];
-    if ([hidestatusbar boolValue]) {
-        [BWTNativeNavigator hideStatusBar];
-    } else {
-        [BWTNativeNavigator showStatusBar];
-    }
-    
-    // 是否隐藏状态栏
-    NSNumber *needshare = [self.params bwtObjectForKey:@"needshare"];
-    if ([needshare boolValue]) {
-        [self addRightButton:@selector(p_share) image:BWTSkinImage(@"share")];
-    }
+//    // 是否隐藏导航栏
+//    NSNumber *hideNavigationBar = [self.params ajObjectForKey:@"hidenavigationbar"];
+//    if ([hideNavigationBar boolValue]) {
+//        [BWTNativeNavigator hide];
+//    } else {
+//        [BWTNativeNavigator show];
+//    }
+//
+//    // 是否隐藏状态栏
+//    NSNumber *hidestatusbar = [self.params ajObjectForKey:@"hidestatusbar"];
+//    if ([hidestatusbar boolValue]) {
+//        [BWTNativeNavigator hideStatusBar];
+//    } else {
+//        [BWTNativeNavigator showStatusBar];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    if ([self.params bwtObjectForKey:@"usecache"]) {
-        [BWTBaseWebCacheTools configWKWebViewCache:[self.params bwtObjectForKey:@"url"]];
+    if ([self.params ajObjectForKey:@"usecache"]) {
+        [AJBaseWebCacheTools configWKWebViewCache:[self.params ajObjectForKey:@"url"]];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     // 是否禁用缓存
-    if ([self.params bwtObjectForKey:@"usecache"]) {
-        [BWTBaseWebCacheTools unConfigWKWebViewCache:[self.params bwtObjectForKey:@"url"]];
+    if ([self.params ajObjectForKey:@"usecache"]) {
+        [AJBaseWebCacheTools unConfigWKWebViewCache:[self.params ajObjectForKey:@"url"]];
     }
 }
 
@@ -119,8 +115,8 @@ static UIColor *kProgressColor;
 - (void)createWKWebView {
     // 创建进度条
     UIProgressView *progressView = [[UIProgressView alloc] init];
-    NSNumber *hideProgress = [self.params bwtObjectForKey:@"hideprogress"];
-    progressView.progressTintColor = [hideProgress boolValue] ? [UIColor clearColor] : BWTUIColor.mainUIColor;
+    NSNumber *hideProgress = [self.params ajObjectForKey:@"hideprogress"];
+    progressView.progressTintColor = [hideProgress boolValue] ? [UIColor clearColor] : AJUIColorFrom10RGB(8, 122, 250);
     [self.view addSubview:progressView];
     self.progressView = progressView;
     progressView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -138,7 +134,7 @@ static UIColor *kProgressColor;
     WKUserContentController *userContentVC = [[WKUserContentController alloc] init];
     webConfig.userContentController = userContentVC;
     WKWebView *wk = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webConfig];
-    NSNumber *scrollenable = [self.params bwtObjectForKey:@"scrollenable"];
+    NSNumber *scrollenable = [self.params ajObjectForKey:@"scrollenable"];
     if (!scrollenable) {
         scrollenable = @(1);
     }
@@ -161,7 +157,7 @@ static UIColor *kProgressColor;
                                 ]];
     
     //jsBridge
-    self.bridge = [WKWebViewJavascriptBridge bridgeForWebView:self.wv];
+    self.bridge = [AJWebViewJSBridge bridgeForWebView:self.wv];
     [self.bridge setWebViewDelegate:self];
     
     [self.wv.configuration.userContentController addScriptMessageHandler:self.bridge name:@"WKWebViewJavascriptBridge"];
@@ -177,41 +173,31 @@ static UIColor *kProgressColor;
     }
     
     //设置UA格式，和h5约定
-    NSString *customerUA = [defaultUA stringByAppendingString:[NSString stringWithFormat:@" BWTJSBridge/%@", kBridgeVersion]];
-    
-    NSLog(@"set User-Agent:\n%@", customerUA);
-    
+    NSString *customerUA = @"AJJSBridge/1.0.0";
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":customerUA}];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (void)p_backButton {
+    kAJWeakSelf
+    [self.navigationItem ajAddLeftButtonWithImage:AJWebViewImage(@"ajwebview_icon_back") callback:^{
+        [ajSelf backBtnAction:nil];
+    }];
+}
 
-/**
- 加载地址
- */
 - (void)loadHTML {
-    NSString *url = [self.params valueForKey:@"url"];
-    if ([self p_isHasChineseWithStr:url]) {
-        url = [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *url = [self.params ajObjectForKey:@"url"];
+    if (url.ajHasChinese) {
+        url = url.ajURLEncode;
     }
     if ([url hasPrefix:@"http"]) {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10];
         [self.wv loadRequest:request];
     } else {
-        // 加载本地页面，iOS 8不支持
-        if (@available(iOS 9.0, *)) {
-            //本地路径的html页面路径
-            NSURL *bundleUrl = [[NSBundle mainBundle] bundleURL];
-            NSURL *pathUrl = [[NSBundle mainBundle] URLForResource:url withExtension:@""];
-            [self.wv loadFileURL:pathUrl allowingReadAccessToURL:bundleUrl];
-        } else {
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"发生错误" message:@"本地页面的方式不支持iOS9以下" preferredStyle:(UIAlertControllerStyleAlert)];
-            UIAlertAction *action = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            [alertController addAction:action];
-            [self presentViewController:alertController animated:YES completion:nil];
-        }
+        // 加载本地页面，iOS 9以下不支持
+        NSURL *bundleUrl = [[NSBundle mainBundle] bundleURL];
+        NSURL *pathUrl = [[NSBundle mainBundle] URLForResource:url withExtension:@""];
+        [self.wv loadFileURL:pathUrl allowingReadAccessToURL:bundleUrl];
     }
 }
 
@@ -226,7 +212,7 @@ static UIColor *kProgressColor;
         // 设置title
         if ([keyPath isEqualToString:@"title"]) {
             NSString *title = change[@"new"];
-            NSString *titleStr = [self.params bwtObjectForKey:@"title"];
+            NSString *titleStr = [self.params ajObjectForKey:@"title"];
             self.navigationItem.title = titleStr ? titleStr : title;
         }
         // 设置进度
@@ -283,9 +269,7 @@ static UIColor *kProgressColor;
     }
 }
 
-/**
- 特殊跳转
- */
+/// 特殊跳转
 - (void)openWindow:(WKNavigationAction *)navigationAction {
     self.progressView.progress = 0;
     self.progressH.constant = 1;
@@ -296,15 +280,15 @@ static UIColor *kProgressColor;
     if (!self.wv.canGoBack) {
         self.navigationItem.leftBarButtonItem = nil;
         self.navigationItem.leftBarButtonItems = @[];
-        [self addLeftButton:@selector(backBtnAction:)];
+        [self p_backButton];
         return;
     }
     
     if (!self.closeButtonItem) {
-        self.closeButtonItem = [[UIBarButtonItem alloc] initWithImage:BWTSkinImage(@"msx_icon_close") style:(UIBarButtonItemStylePlain) target:self action:@selector(closeBtnAction:)];
+        self.closeButtonItem = [[UIBarButtonItem alloc] initWithImage:AJWebViewImage(@"ajwebview_icon_close") style:(UIBarButtonItemStylePlain) target:self action:@selector(closeBtnAction:)];
     }
     if (!self.leftBarButtonItem) {
-        self.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:BWTSkinImage(@"msx_icon_back") style:(UIBarButtonItemStylePlain) target:self action:@selector(backBtnAction:)];;
+        self.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:AJWebViewImage(@"ajwebview_icon_back") style:(UIBarButtonItemStylePlain) target:self action:@selector(backBtnAction:)];;
     }
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.leftBarButtonItems = @[];
@@ -326,11 +310,6 @@ static UIColor *kProgressColor;
 
 - (void)closeBtnAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)p_share {
-    NSString *content = [NSString stringWithFormat:@"来自@%@ %@", BWTConfigInfo.appName, self.wv.title];
-    [BWTNativeUtil share:nil title:self.wv.title content:content image:BWTImage(@"AppIcon", nil) url:[self.params bwtObjectForKey:@"url"] callback:nil];
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
@@ -380,12 +359,13 @@ static UIColor *kProgressColor;
 }
 
 #pragma mark --- WKUIDelegate
-//WebVeiw关闭
+
+/// WebVeiw关闭
 - (void)webViewDidClose:(WKWebView *)webView {
     
 }
 
-//显示一个JavaScript警告面板
+/// 显示一个JavaScript警告面板
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler{
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -396,7 +376,7 @@ static UIColor *kProgressColor;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-//显示一个JavaScript确认面板
+/// 显示一个JavaScript确认面板
 - (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
@@ -413,7 +393,7 @@ static UIColor *kProgressColor;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-//显示一个JavaScript文本输入面板
+/// 显示一个JavaScript文本输入面板
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
@@ -426,14 +406,14 @@ static UIColor *kProgressColor;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark --- BWTJSPageApi
+#pragma mark -- AJJSPageApi
 
-//刷新方法
+/// 刷新方法
 - (void)reloadWKWebview {
     [self.wv reload];
 }
 
-#pragma mark --- BWTJSNavigatorApi
+#pragma mark -- AJJSNavigatorApi
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if ([self.bridge containObjectForKeyInCacheDicWithModuleName:@"navigator" KeyName:@"hookSysBack"]) {
@@ -451,9 +431,9 @@ static UIColor *kProgressColor;
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark --- BWTJSAuthApi
+#pragma mark --- AJJSAuthApi
 
-//注册自定义API的方法
+/// 注册自定义API的方法
 - (BOOL)registerHandlersWithClassName:(NSString *)className moduleName:(NSString *)moduleName {
     return [self.bridge registerHandlersWithClassName:className moduleName:moduleName];
 }
@@ -466,22 +446,7 @@ static UIColor *kProgressColor;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"<BWTBaseWebLoader>dealloc");
-}
-
-- (BOOL)p_isHasChineseWithStr:(NSString *)strFrom {
-    for (int i=0; i<strFrom.length; i++) {
-        NSRange range =NSMakeRange(i, 1);
-        NSString * strFromSubStr=[strFrom substringWithRange:range];
-        const char *cStringFromstr = [strFromSubStr UTF8String];
-        if (strlen(cStringFromstr)==3) {
-            //汉字
-            return YES;
-        } else if (strlen(cStringFromstr)==1) {
-            //字母
-        }
-    }
-    return NO;
+    NSLog(@"<AJBaseWebLoader>dealloc");
 }
 
 @end

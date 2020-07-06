@@ -16,12 +16,18 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "AJWebView/Classes/**/*.{h,m}",
   "resource_bundles": {
     "AJWebView": [
       "AJWebView/Assets/Image.xcassets"
+    ]
+  },
+  "prefix_header_file": "AJWebView/Classes/AJWebView.pch",
+  "dependencies": {
+    "AJKit": [
+      "0.4.2"
     ]
   }
 }

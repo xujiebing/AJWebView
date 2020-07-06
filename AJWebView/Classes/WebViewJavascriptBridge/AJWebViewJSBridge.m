@@ -1,61 +1,30 @@
 //
-//  WKWebViewJavascriptBridge.m
+//  AJWebViewJSBridge.m
+//  AJKit
 //
-//  Created by @LokiMeyburg on 10/15/14.
-//  Copyright (c) 2014 @LokiMeyburg. All rights reserved.
+//  Created by 徐结兵 on 2020/7/5.
 //
 
-
-#import "WKWebViewJavascriptBridge.h"
-#import "BWTRegisterBaseClass.h"
+#import "AJWebViewJSBridge.h"
 
 #if defined(supportsWKWebKit)
 
-@interface WKWebViewJavascriptBridge ()
-
-@end
-
-@implementation WKWebViewJavascriptBridge {
+@implementation AJWebViewJSBridge {
     __weak WKWebView* _webView;
     __weak id<WKNavigationDelegate> _webViewDelegate;
     long _uniqueId;
-    WebViewJavascriptBridgeBase *_base;
+    AJWebViewJSBridgeBase *_base;
 }
 
-/* API
- *****/
-
-+ (void)enableLogging { [WebViewJavascriptBridgeBase enableLogging]; }
++ (void)enableLogging {
+    [AJWebViewJSBridgeBase enableLogging];
+}
 
 + (instancetype)bridgeForWebView:(WKWebView*)webView {
-    WKWebViewJavascriptBridge* bridge = [[self alloc] init];
+    AJWebViewJSBridge* bridge = [[self alloc] init];
     [bridge _setupInstance:webView];
     [bridge reset];
     return bridge;
-}
-
-- (void)send:(id)data {
-    [self send:data responseCallback:nil];
-}
-
-- (void)send:(id)data responseCallback:(WVJBResponseCallback)responseCallback {
-    [_base sendData:data responseCallback:responseCallback handlerName:nil];
-}
-
-- (void)callHandler:(NSString *)handlerName {
-    [self callHandler:handlerName data:nil responseCallback:nil];
-}
-
-- (void)callHandler:(NSString *)handlerName data:(id)data {
-    [self callHandler:handlerName data:data responseCallback:nil];
-}
-
-- (void)callHandler:(NSString *)handlerName data:(id)data responseCallback:(WVJBResponseCallback)responseCallback {
-    [_base sendData:data responseCallback:responseCallback handlerName:handlerName];
-}
-
-- (void)registerHandler:(NSString *)handlerName handler:(WVJBHandler)handler {
-    _base.messageHandlers[handlerName] = [handler copy];
 }
 
 - (void)reset {
@@ -66,16 +35,9 @@
     _webViewDelegate = webViewDelegate;
 }
 
-- (void)disableJavscriptAlertBoxSafetyTimeout {
-    [_base disableJavscriptAlertBoxSafetyTimeout];
-}
-
-/* Internals
- ***********/
-
 - (void)dealloc {
     //手动释放内存
-    for (BWTRegisterBaseClass *bsRegister in _base.modulesDic.allValues) {
+    for (AJRegisterBaseClass *bsRegister in _base.modulesDic.allValues) {
         [bsRegister releaseRAM];
     }
     _base = nil;
@@ -86,28 +48,14 @@
     NSLog(@"<WKWebViewJavascriptBridge>dealloc");
 }
 
-
-/* WKWebView Specific Internals
- ******************************/
-
 - (void) _setupInstance:(WKWebView*)webView {
     _webView = webView;
 //    _webView.navigationDelegate = self;
-    _base = [[WebViewJavascriptBridgeBase alloc] init];
+    _base = [[AJWebViewJSBridgeBase alloc] init];
     _base.delegate = self;
 }
 
-
-- (void)WKFlushMessageQueue {
-    [_webView evaluateJavaScript:[_base webViewJavascriptFetchQueyCommand] completionHandler:^(NSString* result, NSError* error) {
-        if (error != nil) {
-            NSLog(@"WebViewJavascriptBridge: WARNING: Error when trying to fetch data from WKWebView: %@", error);
-        }
-        [_base flushMessageQueue:result];
-    }];
-}
-
-- (NSString*) _evaluateJavascript:(NSString*)javascriptCommand
+- (NSString*)_evaluateJavascript:(NSString*)javascriptCommand
 {
     [_webView evaluateJavaScript:javascriptCommand completionHandler:nil];
     return NULL;
@@ -130,10 +78,10 @@
 - (BOOL)registerHandlersWithClassName:(NSString *)className moduleName:(NSString *)moduleName {
     BOOL registerSuccess = YES;
     if ([className length] && [moduleName length]) {
-        BWTRegisterBaseClass *bsRegister = [[NSClassFromString(className) alloc] init];
+        AJRegisterBaseClass *bsRegister = [[NSClassFromString(className) alloc] init];
         if (bsRegister && [bsRegister respondsToSelector:@selector(registerHandlers)]) {
             bsRegister.moduleName = moduleName;
-            bsRegister.webloader = (BWTBaseWebLoader *)_webViewDelegate;
+            bsRegister.webloader = (AJBaseWebLoader *)_webViewDelegate;
             [bsRegister registerHandlers];
             [_base.modulesDic setObject:bsRegister forKey:moduleName];
         } else {
@@ -149,7 +97,7 @@
 //获取页面内临时缓存的数据或方法
 - (id)objectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
     if ([_base.modulesDic.allKeys containsObject:moduleName]) {
-        BWTRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+        AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
         id object = [bs objectForKeyInCacheDic:keyName];
         if (object) {
             return object;
@@ -160,7 +108,7 @@
 
 - (BOOL)containObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
     if ([_base.modulesDic.allKeys containsObject:moduleName]) {
-        BWTRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+        AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
         if ([bs containObjectForKeyInCacheDic:keyName]) {
             return YES;
         }
@@ -170,7 +118,7 @@
 
 //删除页面内临时缓存的数据或方法
 - (void)removeObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
-    BWTRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+    AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
     [bs removeObjectForKeyInCacheDic:keyName];
 }
 

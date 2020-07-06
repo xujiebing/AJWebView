@@ -7,9 +7,9 @@
 //
 
 
-#import "BWTRegisterBaseClass.h"
+#import "AJRegisterBaseClass.h"
 
-@interface BWTJSAuthApi : BWTRegisterBaseClass
+@interface BWTJSAuthApi : AJRegisterBaseClass
 
 @end
 

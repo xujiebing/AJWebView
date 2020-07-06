@@ -175,7 +175,7 @@
             [BWTNativeUtil logEnd:@"registNativeNotify" result:dic];
             return ;
         };
-        NSString *type = [NSString stringWithFormat:@"%@", [data bwtObjectForKey:@"type"]];
+        NSString *type = [NSString stringWithFormat:@"%@", [data ajObjectForKey:@"type"]];
         [self.typeDic setObject:responseCallback forKey:type]; // 如果是相同类型的业务，重复注册的话，直接覆盖掉，以最后一个为准
         [BWTNativeUtil logEnd:@"registNativeNotify" result:@{}];
     }];
@@ -188,8 +188,8 @@
             [BWTNativeUtil logEnd:@"callNativeNotify" result:dic];
             return ;
         };
-        NSString *type = [NSString stringWithFormat:@"%@", [data bwtObjectForKey:@"type"]];
-        id params = [data bwtObjectForKey:@"params"];
+        NSString *type = [NSString stringWithFormat:@"%@", [data ajObjectForKey:@"type"]];
+        id params = [data ajObjectForKey:@"params"];
         if (!params) {
             params = @"";
         }
@@ -208,9 +208,9 @@
     __weak typeof(self) weakSelf = self;
     [[[NSNotificationCenter defaultCenter] rac_addObserverForName:@"BWTWebviewNativeNotify" object:nil] subscribeNext:^(NSNotification * _Nullable x) {
         for (NSString *type in [self.typeDic allKeys]) {
-            if ([type isEqualToString:[x.object bwtObjectForKey:@"type"]]) {
+            if ([type isEqualToString:[x.object ajObjectForKey:@"type"]]) {
                 WVJBResponseCallback responseCallback = [self.typeDic objectForKey:type];
-                id result = [x.object bwtObjectForKey:@"result"];
+                id result = [x.object ajObjectForKey:@"result"];
                 NSDictionary *dic = [weakSelf responseDicWithCode:YES Msg:@"注册方法回调成功" result:result];
                 responseCallback(dic);
                 [self.typeDic removeObjectForKey:type];

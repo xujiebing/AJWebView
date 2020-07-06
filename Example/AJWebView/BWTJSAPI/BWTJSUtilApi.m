@@ -376,7 +376,7 @@
         [BWTNativeUtil logStart:@"getTodayStepCounter"];
         [[PedometerManager.sharedPedometerManager queryPedometer:0] subscribeNext:^(NSArray *array) {
             NSDictionary *dic = [array firstObject];
-            NSString *stepNumber = [dic bwtObjectForKey:@"step_number"];
+            NSString *stepNumber = [dic ajObjectForKey:@"step_number"];
             NSDictionary *result = [weakSelf responseDicWithCode:YES Msg:@"" result:@{@"stepCount":ISNIL(stepNumber)}];
             responseCallback(result);
             [BWTNativeUtil logEnd:@"getTodayStepCounter" result:result];

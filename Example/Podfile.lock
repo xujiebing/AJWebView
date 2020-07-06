@@ -1,16 +1,37 @@
 PODS:
-  - AJWebView (0.1.0)
+  - AJKit (0.4.2):
+    - MJRefresh (= 3.2.3)
+    - ReactiveObjC (= 3.1.1)
+    - SVProgressHUD (= 2.2.5)
+  - AJWebView (0.1.0):
+    - AJKit (= 0.4.2)
+  - MJRefresh (3.2.3)
+  - ReactiveObjC (3.1.1)
+  - SVProgressHUD (2.2.5)
 
 DEPENDENCIES:
+  - AJKit (from `../../AJKit`)
   - AJWebView (from `../`)
 
+SPEC REPOS:
+  trunk:
+    - MJRefresh
+    - ReactiveObjC
+    - SVProgressHUD
+
 EXTERNAL SOURCES:
+  AJKit:
+    :path: "../../AJKit"
   AJWebView:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AJWebView: bcd845a1b504e5ec4fd2467dc36dddd6e4c0af66
+  AJKit: 37dc530d48588f95b8210c41d9bb9954fd92ee0c
+  AJWebView: ef0963cc0cca0caab5f1d521c1e4b4bab5a7988e
+  MJRefresh: 2b1214a2dc8f4df4c5dcb028ea2ad4e245425fb7
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
-PODFILE CHECKSUM: fe131351f5a840d54f74fa1d368a3a7690670a15
+PODFILE CHECKSUM: 68d02d96eb69de723885b52a93421f5cdd26eda3
 
 COCOAPODS: 1.8.4

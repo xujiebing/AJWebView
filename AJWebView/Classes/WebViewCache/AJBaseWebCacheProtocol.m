@@ -1,15 +1,15 @@
 //
-//  BWTBaseWebCacheProtocol.m
-//  BWTAbility
+//  AJBaseWebCacheProtocol.m
+//  AJKit
 //
-//  Created by ccc's MacBook Pro on 2017/12/27.
+//  Created by 徐结兵 on 2020/7/5.
 //
 
-#import "BWTBaseWebCacheProtocol.h"
+#import "AJBaseWebCacheProtocol.h"
 
 static NSString* const FilteredKey = @"FilteredKey";
 
-@implementation BWTBaseWebCacheProtocol
+@implementation AJBaseWebCacheProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     NSString* extension = request.URL.pathExtension;
@@ -29,17 +29,16 @@ static NSString* const FilteredKey = @"FilteredKey";
     
     // 在这里判断是否需要取缓存
     NSString *key = [NSString stringWithFormat:@"%@", request.URL];
-    NSData *value = [BWTBaseWebCacheProtocol readDataWith:key.bwtBase64Encoding];
+    NSData *value = [AJBaseWebCacheProtocol readDataWith:key.ajBase64Encoding];
     if (!value) {
         // 从网络去取
-        kRACWeakSelf
+        kAJWeakSelf
         NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            kRACStrongSelf
             if (error == nil) {
-                [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
-                [self.client URLProtocol:self didLoadData:data];
-                [self.client URLProtocolDidFinishLoading:self];
-                [BWTBaseWebCacheProtocol writeDataValueWithName:key.bwtBase64Encoding data:data];
+                [ajSelf.client URLProtocol:ajSelf didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
+                [ajSelf.client URLProtocol:ajSelf didLoadData:data];
+                [ajSelf.client URLProtocolDidFinishLoading:ajSelf];
+                [AJBaseWebCacheProtocol writeDataValueWithName:key.ajBase64Encoding data:data];
             }
         }];
         [task resume];
@@ -58,7 +57,7 @@ static NSString* const FilteredKey = @"FilteredKey";
 
 // 存webview的缓存文件
 + (BOOL)writeDataValueWithName:(NSString *)fileName data:(NSData *)data{
-    NSString *path = [BWTBaseWebCacheProtocol finddocumentpath];//调用寻找Documents路径方法
+    NSString *path = [AJBaseWebCacheProtocol finddocumentpath];//调用寻找Documents路径方法
     NSString *file = [NSString stringWithFormat:@"%@/%@", path, fileName];//在Documents/WKWebViewCache里建立一个文件
     BOOL result = [data writeToFile:file atomically:YES];//定义一个bool类型的变量，判断文件是否写入成功
     return result;
@@ -66,7 +65,7 @@ static NSString* const FilteredKey = @"FilteredKey";
 
 // 读取webview的缓存文件
 + (NSData *)readDataWith:(NSString *)fileName {
-    NSString *path = [BWTBaseWebCacheProtocol finddocumentpath];
+    NSString *path = [AJBaseWebCacheProtocol finddocumentpath];
     NSString *readstring = [NSString stringWithFormat:@"%@/%@", path, fileName];//找到我们的file文件
     
     NSData *data = [[NSData alloc]initWithContentsOfFile:readstring];//取出文件里面的数据

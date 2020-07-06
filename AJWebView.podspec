@@ -14,13 +14,14 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/xujiebing/AJWebView.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'AJWebView/Classes/**/*.{h,m}'
   s.resource_bundles = {
     'AJWebView' => ['AJWebView/Assets/Image.xcassets']
   }
-#  s.prefix_header_file = 'AJWebView/Classes/AJWebView.pch'
+  s.prefix_header_file = 'AJWebView/Classes/AJWebView.pch'
+  s.dependency 'AJKit', '0.4.2'
 #  s.dependency 'BWTBaseAbility/Location'
 #  s.dependency 'BWTBaseAbility/Share'
 #  s.dependency 'BWTBaseAbility/InvalidApplePay'
