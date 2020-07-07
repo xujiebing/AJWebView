@@ -9,35 +9,21 @@
 
 #if defined(supportsWKWebKit)
 
+@interface AJWebViewJSBridge ()
+
+@property (nonatomic, weak) WKWebView *webView;
+@property (nonatomic, strong) AJWebViewJSBridgeBase *base;
+@end
+
 @implementation AJWebViewJSBridge {
-    __weak WKWebView *_webView;
-    __weak id<WKNavigationDelegate> _webViewDelegate;
     long _uniqueId;
-    AJWebViewJSBridgeBase *_base;
 }
 
-+ (void)enableLogging {
-    [AJWebViewJSBridgeBase enableLogging];
-}
-
-+ (instancetype)bridgeForWebView:(WKWebView*)webView {
-    AJWebViewJSBridge* bridge = [[self alloc] init];
-    [bridge _setupInstance:webView];
-    [bridge reset];
-    return bridge;
-}
-
-- (void)reset {
-    [_base reset];
-}
-
-- (void)setWebViewDelegate:(id<WKNavigationDelegate>)webViewDelegate {
-    _webViewDelegate = webViewDelegate;
-}
+#pragma mark === 生命周期方法
 
 - (void)dealloc {
     //手动释放内存
-    for (AJRegisterBaseClass *bsRegister in _base.modulesDic.allValues) {
+    for (AJRegisterBaseClass *bsRegister in self.base.modulesDic.allValues) {
         [bsRegister releaseRAM];
     }
     _base = nil;
@@ -48,22 +34,26 @@
     NSLog(@"<AJWebViewJSBridge>dealloc");
 }
 
-- (void) _setupInstance:(WKWebView*)webView {
-    _webView = webView;
-    _base = [[AJWebViewJSBridgeBase alloc] init];
-    _base.delegate = self;
+#pragma mark === 公共方法
+
++ (instancetype)bridgeForWebView:(WKWebView*)webView {
+    AJWebViewJSBridge *bridge = [[self alloc] init];
+    bridge.webView = webView
+    [bridge reset];
+    return bridge;
 }
 
-- (NSString*)_evaluateJavascript:(NSString*)javascriptCommand
-{
-    [_webView evaluateJavaScript:javascriptCommand completionHandler:nil];
-    return NULL;
++ (void)enableLogging {
+    [AJWebViewJSBridgeBase enableLogging];
 }
 
-#pragma mark --- BWTJS
+- (void)reset {
+    [self.base reset];
+}
 
 //注册框架已有的API
 - (void)registerFrameAPI {
+    /// TODO:待开发
     [self registerHandlersWithClassName:@"BWTJSNavigatorApi" moduleName:@"navigator"];
     [self registerHandlersWithClassName:@"BWTJSRuntimeApi" moduleName:@"runtime"];
     [self registerHandlersWithClassName:@"BWTJSDeviceApi" moduleName:@"device"];
@@ -82,10 +72,10 @@
             bsRegister.moduleName = moduleName;
             bsRegister.webloader = (AJBaseWebLoader *)_webViewDelegate;
             [bsRegister registerHandlers];
-            [_base.modulesDic setObject:bsRegister forKey:moduleName];
+            [self.base.modulesDic setObject:bsRegister forKey:moduleName];
         } else {
             registerSuccess = NO;
-            NSLog(@"Api模块注册失败, ClassName:%@, moduleName:%@", className, moduleName);
+            AJLog(@"Api模块注册失败, ClassName:%@, moduleName:%@", className, moduleName);
         }
     } else {
         registerSuccess = NO;
@@ -95,8 +85,8 @@
 
 //获取页面内临时缓存的数据或方法
 - (id)objectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
-    if ([_base.modulesDic.allKeys containsObject:moduleName]) {
-        AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+    if ([self.base.modulesDic.allKeys containsObject:moduleName]) {
+        AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
         id object = [bs objectForKeyInCacheDic:keyName];
         if (object) {
             return object;
@@ -106,8 +96,8 @@
 }
 
 - (BOOL)containObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
-    if ([_base.modulesDic.allKeys containsObject:moduleName]) {
-        AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+    if ([self.base.modulesDic.allKeys containsObject:moduleName]) {
+        AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
         if ([bs containObjectForKeyInCacheDic:keyName]) {
             return YES;
         }
@@ -117,22 +107,38 @@
 
 //删除页面内临时缓存的数据或方法
 - (void)removeObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName KeyName:(NSString *)keyName {
-    AJRegisterBaseClass *bs = [_base.modulesDic objectForKey:moduleName];
+    AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
     [bs removeObjectForKeyInCacheDic:keyName];
 }
 
-#pragma mark - WKScriptMessageHandler
+#pragma mark === getter方法
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+- (AJWebViewJSBridgeBase *)base {
+    if (!_base) {
+        _base = [[AJWebViewJSBridgeBase alloc] init];
+        _base.delegate = self;
+    }
+    return _base;
+}
+
+#pragma mark === AJWebViewJSBridgeBaseDelegate
+
+- (NSString *)evaluateJavascript:(NSString *)javascriptCommand {
+    [self.webView evaluateJavaScript:javascriptCommand completionHandler:nil];
+    return NULL;
+}
+
+#pragma mark === 私有方法
+
+#pragma mark === WKScriptMessageHandler
+
+- (void)userContentController:(WKUserContentController *)userContentController
+      didReceiveScriptMessage:(WKScriptMessage *)message {
     if ([message.name isEqualToString:@"AJWebViewJSBridge"]) {
-        //解析数据
         [self excuteMessage:message.body];
     }
 }
 
-/**
- 解析数据等逻辑
- */
 - (void)excuteMessage:(NSString *)message {
 //    NSString *msgUTF8 = [message stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    NSString *msgUTF8 = [message stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -150,7 +156,7 @@
     NSString *callbackId = msgURL.port.stringValue;
     NSString *dataStr = [msgURL.query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *data = [msgURL.query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    id dataObj = [_base deserializeMessageJSON:data];
+    id dataObj = [self.base deserializeMessageJSON:data];
     
     NSMutableDictionary *msgDic = [NSMutableDictionary dictionary];
     if (handlerName) {
@@ -165,7 +171,7 @@
     if (moduleName) {
         [msgDic setObject:moduleName forKey:@"moduleName"];
     }
-    [_base excuteMsg:msgDic];
+    [self.base excuteMsg:msgDic];
 }
 
 // URI解码
@@ -182,7 +188,7 @@
     if (errorDescription) {
         [paramDic setObject:errorDescription forKey:@"errorDescription"];
     }
-    [_base sendData:paramDic responseCallback:nil handlerName:@"handleError"];
+    [self.base sendData:paramDic responseCallback:nil handlerName:@"handleError"];
 }
 
 @end

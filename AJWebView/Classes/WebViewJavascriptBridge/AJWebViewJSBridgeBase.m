@@ -43,7 +43,6 @@ static int logMaxLength = 500;
 
 - (void)sendData:(id)data responseCallback:(WVJBResponseCallback)responseCallback handlerName:(NSString*)handlerName {
     NSMutableDictionary* message = [NSMutableDictionary dictionary];
-    
     if (data) {
         message[@"data"] = data;
     }
@@ -64,7 +63,10 @@ static int logMaxLength = 500;
 // -------------------------------------------
 
 - (void) _evaluateJavascript:(NSString *)javascriptCommand {
-    [self.delegate _evaluateJavascript:javascriptCommand];
+    if (![self.delegate respondsToSelector:@selector(evaluateJavascript:)]) {
+        return;
+    }
+    [self.delegate evaluateJavascript:javascriptCommand];
 }
 
 - (void)_queueMessage:(WVJBMessage *)message {
@@ -103,7 +105,9 @@ static int logMaxLength = 500;
 }
 
 - (void)_log:(NSString *)action json:(id)json {
-    if (!logging) { return; }
+    if (!logging) {
+        return;
+    }
     if (![json isKindOfClass:[NSString class]]) {
         json = [self _serializeMessage:json pretty:YES];
     }

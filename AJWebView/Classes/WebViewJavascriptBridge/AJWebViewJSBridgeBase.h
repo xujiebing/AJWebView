@@ -17,7 +17,7 @@ typedef NSDictionary WVJBMessage;
 
 @protocol AJWebViewJSBridgeBaseDelegate <NSObject>
 
-- (NSString*) _evaluateJavascript:(NSString*)javascriptCommand;
+- (NSString*)evaluateJavascript:(NSString *)javascriptCommand;
 
 @end
 

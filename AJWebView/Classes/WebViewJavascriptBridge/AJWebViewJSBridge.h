@@ -20,11 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AJWebViewJSBridge : NSObject <AJWebViewJSBridgeBaseDelegate, WKScriptMessageHandler>
 
+@property (nonatomic, weak) id <WKNavigationDelegate>webViewDelegate;
+
 + (instancetype)bridgeForWebView:(WKWebView*)webView;
+
 + (void)enableLogging;
 
 - (void)reset;
-- (void)setWebViewDelegate:(id<WKNavigationDelegate>)webViewDelegate;
 
 /// WKWebView批量注册框架API方法
 - (void)registerFrameAPI;

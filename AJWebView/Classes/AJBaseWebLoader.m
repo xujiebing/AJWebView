@@ -29,7 +29,7 @@ static UIColor *kProgressColor;
 
 @implementation AJBaseWebLoader
 
-#pragma mark --- 生命周期
+#pragma mark === 生命周期
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -109,7 +109,7 @@ static UIColor *kProgressColor;
     NSLog(@"<AJBaseWebLoader>dealloc");
 }
 
-#pragma mark -- setter方法
+#pragma mark === getter方法
 
 - (void)setParameter:(NSDictionary *)parameter {
     _parameter = parameter;
@@ -175,7 +175,7 @@ static UIColor *kProgressColor;
     return _bridge;
 }
 
-#pragma mark -- 私有方法
+#pragma mark === 私有方法
 
 /// 改变User-Agent
 - (void)p_appendUserAgent {
@@ -258,7 +258,7 @@ static UIColor *kProgressColor;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark --- KVO
+#pragma mark === KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -289,7 +289,7 @@ static UIColor *kProgressColor;
     }
 }
 
-#pragma mark --- WKNavigationDelegate
+#pragma mark === WKNavigationDelegate
 
 /// 这个代理方法不实现也能正常跳转
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
@@ -362,6 +362,7 @@ static UIColor *kProgressColor;
     //页面加载异常
     NSString *url = [self.parameter ajObjectForKey:@"url"];
     //反馈页面加载错误
+    /// TODO:待开发
     [self.bridge handleErrorWithCode:0 errorUrl:url errorDescription:error.localizedDescription];
 }
 
@@ -370,7 +371,7 @@ static UIColor *kProgressColor;
     completionHandler(NSURLSessionAuthChallengeUseCredential, nil);
 }
 
-#pragma mark --- WKUIDelegate
+#pragma mark === WKUIDelegate
 
 /// WebVeiw关闭
 - (void)webViewDidClose:(WKWebView *)webView {
@@ -418,14 +419,14 @@ static UIColor *kProgressColor;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark -- AJJSPageApi
+#pragma mark === AJJSPageApi
 
 /// 刷新方法
 - (void)reloadWKWebview {
     [self.wv reload];
 }
 
-#pragma mark -- AJJSNavigatorApi
+#pragma mark === AJJSNavigatorApi
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if ([self.bridge containObjectForKeyInCacheDicWithModuleName:@"navigator" KeyName:@"hookSysBack"]) {
@@ -437,13 +438,14 @@ static UIColor *kProgressColor;
     return NO;
 }
 
-#pragma mark --- MFMessageComposeViewControllerDelegate
+#pragma mark === MFMessageComposeViewControllerDelegate
 
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark --- AJJSAuthApi
+#pragma mark === AJJSAuthApi
 
 /// 注册自定义API的方法
 - (BOOL)registerHandlersWithClassName:(NSString *)className moduleName:(NSString *)moduleName {
