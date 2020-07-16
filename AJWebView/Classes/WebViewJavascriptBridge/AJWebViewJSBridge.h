@@ -26,15 +26,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)enableLogging;
 
-- (void)reset;
-
 /// WKWebView批量注册框架API方法
 - (void)registerFrameAPI;
 
 /// 注册API
 /// @param className API类名
 /// @param moduleName API所属模块
-- (BOOL)registerHandlersWithClassName:(NSString *)className moduleName:(NSString *)moduleName;
+- (BOOL)registerHandlersWithClassName:(NSString *)className
+                           moduleName:(NSString *)moduleName;
+
+/// 获取页面内临时缓存的数据或方法
+/// @param moduleName 框架API模块名称
+/// @param keyName key
+- (id)objectForKeyInCacheDicWithModuleName:(NSString *)moduleName
+                                   KeyName:(NSString *)keyName;
+
+/// 是否包含指定的value值
+/// @param moduleName 框架API模块名称
+/// @param keyName key
+- (BOOL)containObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
+                                            KeyName:(NSString *)keyName;
+
+/// 删除页面内临时缓存的数据或方法
+/// @param moduleName 框架API模块名称
+/// @param keyName key
+- (void)removeObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
+                                           KeyName:(NSString *)keyName;
 
 /// 统一异常回调方法
 /// @param errorCode 错误码
@@ -43,24 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)handleErrorWithCode:(NSInteger)errorCode
                    errorUrl:(NSString *)errorUrl
            errorDescription:(NSString *)errorDescription;
-
-/// 获取页面内临时缓存的数据或方法
-/// @param moduleName 框架API模块名称
-/// @param keyName key
-- (id)objectForKeyInCacheDicWithModuleName:(NSString *)moduleName
-                                   KeyName:(NSString *)keyName;
-
-/// 删除页面内临时缓存的数据或方法
-/// @param moduleName 框架API模块名称
-/// @param keyName key
-- (void)removeObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
-                                           KeyName:(NSString *)keyName;
-
-/// 是否包含指定的value值
-/// @param moduleName 框架API模块名称
-/// @param keyName key
-- (BOOL)containObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
-                                            KeyName:(NSString *)keyName;
 
 @end
 

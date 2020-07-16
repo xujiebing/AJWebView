@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define kCustomProtocolScheme @"BWTJSBridge"
+#define kCustomProtocolScheme @"AJJSBridge"
 
 typedef void (^WVJBResponseCallback)(id responseData);
 typedef void (^WVJBHandler)(id data, WVJBResponseCallback responseCallback);
@@ -23,15 +23,14 @@ typedef NSDictionary WVJBMessage;
 
 @interface AJWebViewJSBridgeBase : NSObject
 
-@property (weak, nonatomic) id <AJWebViewJSBridgeBaseDelegate> delegate;
-@property (strong, nonatomic) NSMutableDictionary* responseCallbacks;
-
-+ (void)enableLogging;
-- (void)reset;
-- (void)sendData:(id)data responseCallback:(WVJBResponseCallback)responseCallback handlerName:(NSString*)handlerName;
+@property (weak, nonatomic) id <AJWebViewJSBridgeBaseDelegate>delegate;
 
 /// 新增，存放各个api module的实例
 @property (nonatomic, strong) NSMutableDictionary *modulesDic;
+
++ (void)enableLogging;
+
+- (void)sendData:(id)data handlerName:(NSString*)handlerName;
 
 - (void)excuteMsg:(NSDictionary *)msgDic;
 
