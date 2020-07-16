@@ -12,7 +12,7 @@
 - (void)registerHandlers {
 //    __weak typeof(self) weakSelf = self;
 //    
-//    /// TODO:待开发
+//    // TODO:待开发
 //    [BWTNativeNavigator clear];
 //    
 //    // 设置导航栏标题

@@ -15,9 +15,7 @@
 @property (nonatomic, strong) AJWebViewJSBridgeBase *base;
 @end
 
-@implementation AJWebViewJSBridge {
-    long _uniqueId;
-}
+@implementation AJWebViewJSBridge
 
 #pragma mark === 生命周期方法
 
@@ -48,7 +46,7 @@
 
 //注册框架已有的API
 - (void)registerFrameAPI {
-    /// TODO:待开发
+    // TODO:待开发
     [self registerHandlersWithClassName:@"BWTJSNavigatorApi" moduleName:@"navigator"];
     [self registerHandlersWithClassName:@"BWTJSRuntimeApi" moduleName:@"runtime"];
     [self registerHandlersWithClassName:@"BWTJSDeviceApi" moduleName:@"device"];
@@ -61,50 +59,57 @@
 
 - (BOOL)registerHandlersWithClassName:(NSString *)className
                            moduleName:(NSString *)moduleName {
-    BOOL registerSuccess = YES;
-    if ([className length] && [moduleName length]) {
-        AJRegisterBaseClass *bsRegister = [[NSClassFromString(className) alloc] init];
-        if (bsRegister && [bsRegister respondsToSelector:@selector(registerHandlers)]) {
-            bsRegister.moduleName = moduleName;
-            bsRegister.webloader = (AJBaseWebLoader *)_webViewDelegate;
-            [bsRegister registerHandlers];
-            [self.base.modulesDic setObject:bsRegister forKey:moduleName];
-        } else {
-            registerSuccess = NO;
-            AJLog(@"Api模块注册失败, ClassName:%@, moduleName:%@", className, moduleName);
-        }
-    } else {
-        registerSuccess = NO;
+    BOOL registerSuccess = NO;
+    if (NSString.ajIsEmpty(className)) {
+        return registerSuccess;
     }
+    if (NSString.ajIsEmpty(moduleName)) {
+        return registerSuccess;
+    }
+    AJRegisterBaseClass *bsRegister = [[NSClassFromString(className) alloc] init];
+    if (!bsRegister) {
+        return registerSuccess;
+    }
+    if (![bsRegister respondsToSelector:@selector(registerHandlers)]) {
+        AJLog(@"Api模块注册失败, ClassName:%@, moduleName:%@", className, moduleName);
+        return registerSuccess;
+    }
+    bsRegister.moduleName = moduleName;
+    bsRegister.webloader = (AJBaseWebLoader *)_webViewDelegate;
+    [bsRegister registerHandlers];
+    [self.base.modulesDic setObject:bsRegister forKey:moduleName];
+    registerSuccess = YES;
     return registerSuccess;
 }
 
 - (id)objectForKeyInCacheDicWithModuleName:(NSString *)moduleName
                                    KeyName:(NSString *)keyName {
-    if ([self.base.modulesDic.allKeys containsObject:moduleName]) {
-        AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
-        id object = [bs objectForKeyInCacheDic:keyName];
-        if (object) {
-            return object;
-        }
+    AJRegisterBaseClass *bs = [self.base.modulesDic ajObjectForKey:moduleName];
+    if (!bs) {
+        return nil;
     }
-    return nil;
+    id object = [bs objectForKeyInCacheDic:keyName];
+    return object;
 }
 
 - (BOOL)containObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
                                             KeyName:(NSString *)keyName {
-    if ([self.base.modulesDic.allKeys containsObject:moduleName]) {
-        AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
-        if ([bs containObjectForKeyInCacheDic:keyName]) {
-            return YES;
-        }
+    AJRegisterBaseClass *bs = [self.base.modulesDic ajObjectForKey:moduleName];
+    if (!bs) {
+        return NO;
+    }
+    if ([bs containObjectForKeyInCacheDic:keyName]) {
+        return YES;
     }
     return NO;
 }
 
 - (void)removeObjectForKeyInCacheDicWithModuleName:(NSString *)moduleName
                                            KeyName:(NSString *)keyName {
-    AJRegisterBaseClass *bs = [self.base.modulesDic objectForKey:moduleName];
+    AJRegisterBaseClass *bs = [self.base.modulesDic ajObjectForKey:moduleName];
+    if (!bs) {
+        return;
+    }
     [bs removeObjectForKeyInCacheDic:keyName];
 }
 

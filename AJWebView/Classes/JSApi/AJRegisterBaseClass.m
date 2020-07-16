@@ -78,14 +78,23 @@
 - (id)objectForKeyInCacheDic:(NSString *)keyName {
     if ([self.cacheHandlerDic ajContainsObjectForKey:keyName]) {
         return [self.cacheHandlerDic ajObjectForKey:keyName];
-    } else {
-        return nil;
     }
+    return nil;
 }
 
 //删除
 - (void)removeObjectForKeyInCacheDic:(NSString *)keyName {
     [self.cacheHandlerDic removeObjectForKey:keyName];
+}
+
+- (BOOL)containObjectForKeyInCacheDic:(NSString *)keyName {
+    if (NSString.ajIsEmpty(keyName)) {
+        return NO;
+    }
+    if ([self.cacheHandlerDic ajContainsObjectForKey:keyName]) {
+        return YES;
+    }
+    return NO;
 }
 
 //释放内存的方法

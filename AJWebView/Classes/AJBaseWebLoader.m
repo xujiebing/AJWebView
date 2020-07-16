@@ -50,28 +50,20 @@ static UIColor *kProgressColor;
     [self p_backButton];
     
     // 监听重定向
-    /// TODO:待开发
+    // TODO:待开发
 //    kRACWeakSelf
 //    [[RACObserve(self.wv, canGoBack) distinctUntilChanged] subscribeNext:^(id  _Nullable x) {
 //        kRACStrongSelf
 //        [self p_setCloseBarBtn];
 //    }];
     
-//    // 是否隐藏导航栏
-//    NSNumber *hideNavigationBar = [self.parameter ajObjectForKey:@"hidenavigationbar"];
-//    if ([hideNavigationBar boolValue]) {
-//        [BWTNativeNavigator hide];
-//    } else {
-//        [BWTNativeNavigator show];
-//    }
-//
-//    // 是否隐藏状态栏
-//    NSNumber *hidestatusbar = [self.parameter ajObjectForKey:@"hidestatusbar"];
-//    if ([hidestatusbar boolValue]) {
-//        [BWTNativeNavigator hideStatusBar];
-//    } else {
-//        [BWTNativeNavigator showStatusBar];
-//    }
+    // 是否隐藏导航栏
+    NSNumber *hideNavigationBar = [self.parameter ajObjectForKey:@"hidenavigationbar"];
+    if ([hideNavigationBar boolValue]) {
+        [UIViewController.ajCurrentViewController.navigationController setNavigationBarHidden:YES];
+    } else {
+        [UIViewController.ajCurrentViewController.navigationController setNavigationBarHidden:NO];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,14 +82,12 @@ static UIColor *kProgressColor;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    /// TODO:待开发
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BWTWebViewAppear" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AJWebviewDidAppear object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    /// TODO:待开发
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BWTWebViewDisappear" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AJWebViewDisAppear object:nil];
 }
 
 - (void)dealloc {
@@ -170,7 +160,7 @@ static UIColor *kProgressColor;
 - (AJWebViewJSBridge *)bridge {
     if (!_bridge) {
         _bridge = [AJWebViewJSBridge bridgeForWebView:self.wv];
-        [_bridge setWebViewDelegate:self];
+        _bridge.webViewDelegate = self;
     }
     return _bridge;
 }
@@ -362,7 +352,6 @@ static UIColor *kProgressColor;
     //页面加载异常
     NSString *url = [self.parameter ajObjectForKey:@"url"];
     //反馈页面加载错误
-    /// TODO:待开发
     [self.bridge handleErrorWithCode:0 errorUrl:url errorDescription:error.localizedDescription];
 }
 
