@@ -42,7 +42,7 @@ typedef void (^WVJBHandler)(id data, WVJBResponseCallback responseCallback);
 /// @param data result
 - (NSDictionary *)responseDicWithCode:(NSInteger)code
                                   Msg:(NSString *)msg
-                               result:(id)data;
+                               result:(id _Nullable)data;
 
 #pragma mark --- cacheHandlerDic相关方法
 

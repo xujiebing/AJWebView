@@ -1,5 +1,5 @@
 //
-//  AJViewController.h
+//  AJWebViewViewController.h
 //  AJWebView
 //
 //  Created by xujiebing on 07/01/2020.
@@ -8,6 +8,6 @@
 
 @import UIKit;
 
-@interface AJViewController : UIViewController
+@interface AJWebViewViewController : UIViewController
 
 @end

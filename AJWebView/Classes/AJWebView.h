@@ -28,7 +28,7 @@ static UIImage *AJWebViewImage(NSString *imageName) {
     return AJImage(imageName, AJWebviewModuleName);
 }
 
-#define AJWebViewLogStart(apiName) AJLog(@"=====调用开始=====%@=====", apiName)
-#define AJWebViewLogEnd(apiName, dic) AJLog(@"=====调用结果=====%@=====%@", apiName, dic) \ fprintf(stderr,"\n=====调用结束=====%@=====", apiName)
+#define AJWebViewLogStart(apiName) AJLog(@"\n=====调用开始=====%@=====", apiName)
+#define AJWebViewLogEnd(apiName, dic) AJLog(@"\n=====调用结果=====%@=====\n%@\n=====调用结束=====%@=====", apiName, dic, apiName)
 
 #endif /* AJWebView_h */

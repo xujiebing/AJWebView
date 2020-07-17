@@ -1,25 +1,29 @@
 //
-//  AJViewController.m
+//  AJWebViewViewController.m
 //  AJWebView
 //
 //  Created by xujiebing on 07/01/2020.
 //  Copyright (c) 2020 xujiebing. All rights reserved.
 //
 
-#import "AJViewController.h"
+#import "AJWebViewViewController.h"
 #import <AJWebView/AJWebView.h>
 
-@interface AJViewController ()
+@interface AJWebViewViewController ()
 
 @end
 
-@implementation AJViewController
+@implementation AJWebViewViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    NSString *apiName = @"test";
+    NSDictionary *dic = @{@"111": @"222"};
     
+    AJWebViewLogStart(apiName)
+    AJWebViewLogEnd(apiName, dic)
 }
 
 - (void)didReceiveMemoryWarning

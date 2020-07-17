@@ -9,6 +9,7 @@
 #import <WebKit/WebKit.h>
 #import <AJWebView/AJWebViewJSBridge.h>
 #import <AJWebView/AJBaseWebCacheTools.h>
+#import <AJWebView/AJNativeNavigator.h>
 
 static NSString *KVOContext;
 static UIColor *kProgressColor;
@@ -39,6 +40,7 @@ static UIColor *kProgressColor;
     [self.wv.configuration.userContentController addScriptMessageHandler:self.bridge name:@"AJWebViewJSBridge"];
     [self.wv addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:&KVOContext];
     [self.wv addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:&KVOContext];
+    [self.wv addObserver:self forKeyPath:@"canGoBack" options:NSKeyValueObservingOptionNew context:&KVOContext];
     
     // 注册框架API
     [self.bridge registerFrameAPI];
@@ -49,20 +51,12 @@ static UIColor *kProgressColor;
     // 重写返回按钮事件
     [self p_backButton];
     
-    // 监听重定向
-    // TODO:待开发
-//    kRACWeakSelf
-//    [[RACObserve(self.wv, canGoBack) distinctUntilChanged] subscribeNext:^(id  _Nullable x) {
-//        kRACStrongSelf
-//        [self p_setCloseBarBtn];
-//    }];
-    
     // 是否隐藏导航栏
     NSNumber *hideNavigationBar = [self.parameter ajObjectForKey:@"hidenavigationbar"];
     if ([hideNavigationBar boolValue]) {
-        [UIViewController.ajCurrentViewController.navigationController setNavigationBarHidden:YES];
+        [AJNativeNavigator hideWithVC:self];
     } else {
-        [UIViewController.ajCurrentViewController.navigationController setNavigationBarHidden:NO];
+        [AJNativeNavigator showWithVC:self];
     }
 }
 
@@ -95,6 +89,7 @@ static UIColor *kProgressColor;
     [self.wv.configuration.userContentController removeAllUserScripts];
     [self.wv removeObserver:self forKeyPath:@"title" context:&KVOContext];
     [self.wv removeObserver:self forKeyPath:@"estimatedProgress" context:&KVOContext];
+    [self.wv removeObserver:self forKeyPath:@"canGoBack" context:&KVOContext];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"<AJBaseWebLoader>dealloc");
 }
@@ -172,8 +167,8 @@ static UIColor *kProgressColor;
     //获取默认UA
     NSString *defaultUA = [[UIWebView new] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     
-    if ([defaultUA rangeOfString:@"BWTJSBridge/"].length > 0) {
-        return; // 已有BWT标识，则不用再添加
+    if ([defaultUA rangeOfString:@"AJJSBridge/"].length > 0) {
+        return; // 已有AJ标识，则不用再添加
     }
     
     //设置UA格式，和h5约定
@@ -276,6 +271,10 @@ static UIColor *kProgressColor;
                 [weakSelf.view layoutIfNeeded];
             }];
         }
+    }
+    // 监听重定向
+    if ([keyPath isEqualToString:@"canGoBack"]) {
+        [self p_setCloseBarBtn];
     }
 }
 

@@ -22,11 +22,5 @@ TODO: Add long description of the pod here.
   }
   s.prefix_header_file = 'AJWebView/Classes/AJWebView.pch'
   s.dependency 'AJKit', '0.4.2'
-#  s.dependency 'BWTBaseAbility/Location'
-#  s.dependency 'BWTBaseAbility/Share'
-#  s.dependency 'BWTBaseAbility/InvalidApplePay'
-#  s.dependency 'BWTCommonAbility'
-#  s.dependency 'BWTCommonAbility/Scan'
-#  s.dependency 'BWTPedometer'
   
 end

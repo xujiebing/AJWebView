@@ -30,98 +30,47 @@ static NSArray *defaultLeftItems;
     defaultLeftItems = nil;
 }
 
-+ (void)setNavTitle:(NSString *)title subTitle:(NSString *)subTitle clickable:(BOOL)clickable direction:(NSString *)direction handler:(void (^)(void))handler {
++ (void)setNavTitle:(NSString *)title
+           subTitle:(NSString *)subTitle
+          clickable:(BOOL)clickable
+          direction:(NSString *)direction
+                 vc:(UIViewController *)vc
+            handler:(void (^)(void))handler {
     AJNaviTitleView *titleView = [[AJNaviTitleView alloc] initWithMainTitle:title subTitle:subTitle clickable:clickable direction:direction];
     titleView.clickAction = ^(BOOL click) {
         if (handler) {
             handler();
         }
     };
-    [UIViewController ajCurrentViewController].navigationItem.titleView = titleView;
+    vc.navigationItem.titleView = titleView;
 }
 
-+ (void)setMultiTitle:(NSArray *)titles handler:(void (^)(NSNumber * _Nonnull))handler {
++ (void)setMultiTitle:(NSArray *)titles
+                   vc:(UIViewController *)vc
+              handler:(void (^)(NSNumber * _Nonnull))handler {
     AJNaviSegmentView *segView = [[AJNaviSegmentView alloc] initWithTitleItems:titles];
     segView.titleClickAction = ^(NSInteger index) {
         if (handler) {
             handler(@(index));
         }
     };
-    [UIViewController ajCurrentViewController].navigationItem.titleView = segView;
+    vc.navigationItem.titleView = segView;
 }
 
-+ (void)show {
-    [[UIViewController ajCurrentViewController].navigationController setNavigationBarHidden:NO];
++ (void)showWithVC:(UIViewController *)vc {
+    [vc.navigationController setNavigationBarHidden:NO];
 }
 
-+ (void)hide {
-    [[UIViewController ajCurrentViewController].navigationController setNavigationBarHidden:YES];
++ (void)hideWithVC:(UIViewController *)vc {
+    [vc.navigationController setNavigationBarHidden:YES];
 }
 
-+ (void)showStatusBar {
-    //[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
-}
-
-+ (void)hideStatusBar {
-    //[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
-}
-
-+ (void)setRightBtn:(NSString *)text imageUrl:(NSString *)imageUrl index:(NSNumber *)index isShow:(BOOL)isShow handler:(void (^)(NSNumber * _Nonnull))handler {
-    if ([index integerValue] == 1) {
-        if (text && !imageUrl) {
-            rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithTitle:text style:(UIBarButtonItemStylePlain) target:self action:nil];
-        } else {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
-            UIImage *image = [[UIImage imageWithData:imageData] ajRealCompressToSize:CGSizeMake(22, 22)];
-            if (imageData) {
-                rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithImage:image style:(UIBarButtonItemStylePlain) target:self action:nil];
-            } else {
-                rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithTitle:@"图片" style:(UIBarButtonItemStylePlain) target:self action:nil];
-            }
-        }
-        rightBarButtonItem1.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            if (handler) {
-                handler(@(1));
-            }
-            return [RACSignal empty];
-        }];
-    } else {
-        if (text && !imageUrl) {
-            rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithTitle:text style:(UIBarButtonItemStylePlain) target:self action:nil];
-        } else {
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
-            UIImage *image = [[UIImage imageWithData:imageData] ajRealCompressToSize:CGSizeMake(22, 22)];
-            if (imageData) {
-                rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithImage:image style:(UIBarButtonItemStylePlain) target:self action:nil];
-            } else {
-                rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithTitle:@"图片" style:(UIBarButtonItemStylePlain) target:self action:nil];
-            }
-        }
-        rightBarButtonItem2.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            if (handler) {
-                handler(@(0));
-            }
-            return [RACSignal empty];
-        }];
-    }
-    [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = nil;
-    [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = @[];
-    
-    NSMutableArray *itemArr = [NSMutableArray arrayWithCapacity:1];
-    if (rightBarButtonItem2) {
-        [itemArr addObject:rightBarButtonItem2];
-    }
-    if (rightBarButtonItem1) {
-        [itemArr addObject:rightBarButtonItem1];
-    }
-    if (itemArr.count == 2) {
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = itemArr;
-    } else if (itemArr.count == 1) {
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = [itemArr firstObject];
-    }
-}
-
-+ (void)setLeftBtn:(NSString *)text imageUrl:(NSString *)imageUrl index:(NSNumber *)index isShow:(BOOL)isShow handler:(void (^)(NSNumber * _Nonnull))handler {
++ (void)setLeftBtn:(NSString *)text
+          imageUrl:(NSString *)imageUrl
+             index:(NSNumber *)index
+            isShow:(BOOL)isShow
+                vc:(UIViewController *)vc
+           handler:(void (^)(NSNumber * _Nonnull))handler {
     if ([index integerValue] == 1) {
         if (text && !imageUrl) {
             leftBarButtonItem1 = [[UIBarButtonItem alloc] initWithTitle:text style:(UIBarButtonItemStylePlain) target:self action:nil];
@@ -159,8 +108,8 @@ static NSArray *defaultLeftItems;
             return [RACSignal empty];
         }];
     }
-    [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = nil;
-    [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = @[];
+    vc.navigationItem.leftBarButtonItem = nil;
+    vc.navigationItem.leftBarButtonItems = @[];
     
     NSMutableArray *itemArr = [NSMutableArray arrayWithCapacity:1];
     if (leftBarButtonItem2) {
@@ -170,14 +119,75 @@ static NSArray *defaultLeftItems;
         [itemArr addObject:leftBarButtonItem1];
     }
     if (itemArr.count == 2) {
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = itemArr;
+        vc.navigationItem.leftBarButtonItems = itemArr;
     } else if (itemArr.count == 1) {
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = [itemArr firstObject];
+        vc.navigationItem.leftBarButtonItem = [itemArr firstObject];
     }
 }
 
-+ (void)hideRightBtn:(NSNumber *)index {
-    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:[UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems];
++ (void)setRightBtn:(NSString *)text
+           imageUrl:(NSString *)imageUrl
+              index:(NSNumber *)index
+             isShow:(BOOL)isShow
+                 vc:(UIViewController *)vc
+            handler:(void (^)(NSNumber * _Nonnull))handler {
+    if ([index integerValue] == 1) {
+        if (text && !imageUrl) {
+            rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithTitle:text style:(UIBarButtonItemStylePlain) target:self action:nil];
+        } else {
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+            UIImage *image = [[UIImage imageWithData:imageData] ajRealCompressToSize:CGSizeMake(22, 22)];
+            if (imageData) {
+                rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithImage:image style:(UIBarButtonItemStylePlain) target:self action:nil];
+            } else {
+                rightBarButtonItem1 = [[UIBarButtonItem alloc] initWithTitle:@"图片" style:(UIBarButtonItemStylePlain) target:self action:nil];
+            }
+        }
+        rightBarButtonItem1.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            if (handler) {
+                handler(@(1));
+            }
+            return [RACSignal empty];
+        }];
+    } else {
+        if (text && !imageUrl) {
+            rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithTitle:text style:(UIBarButtonItemStylePlain) target:self action:nil];
+        } else {
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+            UIImage *image = [[UIImage imageWithData:imageData] ajRealCompressToSize:CGSizeMake(22, 22)];
+            if (imageData) {
+                rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithImage:image style:(UIBarButtonItemStylePlain) target:self action:nil];
+            } else {
+                rightBarButtonItem2 = [[UIBarButtonItem alloc] initWithTitle:@"图片" style:(UIBarButtonItemStylePlain) target:self action:nil];
+            }
+        }
+        rightBarButtonItem2.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+            if (handler) {
+                handler(@(0));
+            }
+            return [RACSignal empty];
+        }];
+    }
+    vc.navigationItem.rightBarButtonItem = nil;
+    vc.navigationItem.rightBarButtonItems = @[];
+    
+    NSMutableArray *itemArr = [NSMutableArray arrayWithCapacity:1];
+    if (rightBarButtonItem2) {
+        [itemArr addObject:rightBarButtonItem2];
+    }
+    if (rightBarButtonItem1) {
+        [itemArr addObject:rightBarButtonItem1];
+    }
+    if (itemArr.count == 2) {
+        vc.navigationItem.rightBarButtonItems = itemArr;
+    } else if (itemArr.count == 1) {
+        vc.navigationItem.rightBarButtonItem = [itemArr firstObject];
+    }
+}
+
++ (void)hideRightBtn:(NSNumber *)index
+                  vc:(UIViewController *)vc {
+    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:vc.navigationItem.rightBarButtonItems];
     BOOL changed = NO;
     if ([index integerValue] == 0 && [itemArr containsObject:rightBarButtonItem2] && rightBarButtonItem2) {
         [itemArr removeObject:rightBarButtonItem2];
@@ -188,18 +198,19 @@ static NSArray *defaultLeftItems;
         changed = YES;
     }
     if (changed) {
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = nil;
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = @[];
+        vc.navigationItem.rightBarButtonItem = nil;
+        vc.navigationItem.rightBarButtonItems = @[];
         if (itemArr.count == 2) {
-            [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = itemArr;
+            vc.navigationItem.rightBarButtonItems = itemArr;
         } else if (itemArr.count == 1) {
-            [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = [itemArr firstObject];
+            vc.navigationItem.rightBarButtonItem = [itemArr firstObject];
         }
     }
 }
 
-+ (void)showRightBtn:(NSNumber *)index {
-    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:[UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems];
++ (void)showRightBtn:(NSNumber *)index
+                  vc:(UIViewController *)vc {
+    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:vc.navigationItem.rightBarButtonItems];
     BOOL changed = NO;
     if ([index integerValue] == 0 && ![itemArr containsObject:rightBarButtonItem2] && rightBarButtonItem2) {
         [itemArr insertObject:rightBarButtonItem2 atIndex:0];
@@ -210,18 +221,19 @@ static NSArray *defaultLeftItems;
         changed = YES;
     }
     if (changed) {
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = nil;
-        [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = @[];
+        vc.navigationItem.rightBarButtonItem = nil;
+        vc.navigationItem.rightBarButtonItems = @[];
         if (itemArr.count == 2) {
-            [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItems = itemArr;
+            vc.navigationItem.rightBarButtonItems = itemArr;
         } else if (itemArr.count == 1) {
-            [UIViewController ajCurrentViewController].navigationItem.rightBarButtonItem = [itemArr firstObject];
+            vc.navigationItem.rightBarButtonItem = [itemArr firstObject];
         }
     }
 }
 
-+ (void)hideLeftBtn:(NSNumber *)index {
-    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:[UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems];
++ (void)hideLeftBtn:(NSNumber *)index
+                 vc:(UIViewController *)vc {
+    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:vc.navigationItem.leftBarButtonItems];
     BOOL changed = NO;
     if ([index integerValue] == 0 && [itemArr containsObject:leftBarButtonItem2] && leftBarButtonItem2) {
         [itemArr removeObject:leftBarButtonItem2];
@@ -237,18 +249,19 @@ static NSArray *defaultLeftItems;
         changed = YES;
     }
     if (changed) {
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = nil;
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = @[];
+        vc.navigationItem.leftBarButtonItem = nil;
+        vc.navigationItem.leftBarButtonItems = @[];
         if (itemArr.count == 2) {
-            [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = itemArr;
+            vc.navigationItem.leftBarButtonItems = itemArr;
         } else if (itemArr.count == 1) {
-            [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = [itemArr firstObject];
+            vc.navigationItem.leftBarButtonItem = [itemArr firstObject];
         }
     }
 }
 
-+ (void)showLeftBtn:(NSNumber *)index {
-    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:[UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems];
++ (void)showLeftBtn:(NSNumber *)index
+                 vc:(UIViewController *)vc {
+    NSMutableArray *itemArr = [NSMutableArray arrayWithArray:vc.navigationItem.leftBarButtonItems];
     BOOL changed = NO;
     if ([index integerValue] == 0 && ![itemArr containsObject:leftBarButtonItem2] && leftBarButtonItem2) {
         [itemArr insertObject:leftBarButtonItem2 atIndex:0];
@@ -263,12 +276,12 @@ static NSArray *defaultLeftItems;
         changed = YES;
     }
     if (changed) {
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = nil;
-        [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = @[];
+        vc.navigationItem.leftBarButtonItem = nil;
+        vc.navigationItem.leftBarButtonItems = @[];
         if (itemArr.count == 2) {
-            [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItems = itemArr;
+            vc.navigationItem.leftBarButtonItems = itemArr;
         } else if (itemArr.count == 1) {
-            [UIViewController ajCurrentViewController].navigationItem.leftBarButtonItem = [itemArr firstObject];
+            vc.navigationItem.leftBarButtonItem = [itemArr firstObject];
         }
     }
 }

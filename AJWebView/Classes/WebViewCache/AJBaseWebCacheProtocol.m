@@ -78,12 +78,12 @@ static NSString* const FilteredKey = @"FilteredKey";
     //寻找documents路径
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *value = paths.lastObject;
-    NSString *filePath = [NSString stringWithFormat:@"%@/BWTBaseWebCache", value];
+    NSString *filePath = [NSString stringWithFormat:@"%@/AJBaseWebCache", value];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager fileExistsAtPath:filePath]){//如果不存在,则说明是第一次运行这个程序，那么建立这个文件夹
         NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-        NSString *directryPath = [path stringByAppendingPathComponent:@"BWTBaseWebCache"];
+        NSString *directryPath = [path stringByAppendingPathComponent:@"AJBaseWebCache"];
         [fileManager createDirectoryAtPath:directryPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     

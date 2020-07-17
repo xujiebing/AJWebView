@@ -50,7 +50,9 @@
 }
 
 //统一回调参数字典拼装
-- (NSDictionary *)responseDicWithCode:(NSInteger)code Msg:(NSString *)msg result:(id)data {
+- (NSDictionary *)responseDicWithCode:(NSInteger)code
+                                  Msg:(NSString *)msg
+                               result:(id)data {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     [dic setObject:@(code) forKey:@"code"];
     
